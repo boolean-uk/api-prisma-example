@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+// model User {
+//   id    Int    @id @default(autoincrement())
+//   posts Post[]
+// }
+
+// model Post {
+//   id       Int  @id @default(autoincrement())
+//   author   User @relation(fields: [authorId], references: [id])
+//   authorId Int
+// }
+
+model Book {
+  id        Int      @id @default(autoincrement())
+  title     String
+  type      String
+  author    String
+  topic     String
+  publicationDate DateTime
+  pages     Int
+  publisherId Int
+  publisher Publisher @relation(fields: [publisherId], references: [id])
+  hardback  Boolean @default(false)
+}
+
+model Publisher {
+  id        Int    @id @default(autoincrement())
+  name      String
+  books     Book[]
+}
